@@ -5,6 +5,7 @@ import sys
 input = [line.strip() for line in sys.stdin]
 
 
+# part 1
 program = [[opcode, int(arg)] for opcode, arg in [l.split() for l in input]]
 
 
@@ -18,7 +19,6 @@ def run(program, termination_fn):
         cycle += 1
     return (halted := pc == len(program)), acc
 
-# part 1
 line_executions = [0] * len(program)
 def has_entered_inf_loop(pc, cycle):
     line_executions[pc] += 1

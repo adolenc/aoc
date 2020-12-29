@@ -5,7 +5,6 @@ import sys
 input = [line.strip() for line in sys.stdin]
 
 
-
 # part 1
 input = [(l[0], int(l[1:])) for l in input]
 moves = {'N': (0, 1),

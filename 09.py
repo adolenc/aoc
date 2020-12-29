@@ -6,7 +6,7 @@ input = [int(line) for line in sys.stdin]
 
 
 # part 1
-def two_sums_to(sum, arr): return any(True for n in arr if (sum - n) in arr)
+def two_sums_to(sum, arr): return any(sum - n in arr for n in arr)
 
 PREAMBLE = 25
 invalid = next(n for i, n in enumerate(input[PREAMBLE:], PREAMBLE)

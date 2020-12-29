@@ -8,7 +8,7 @@ input = [int(line) for line in sys.stdin]
 
 
 # part 1
-input = sorted(input + [0] + [max(input) + 3])
+input = sorted([0] + input + [max(input) + 3])
 cumsums = [b - a for a, b in zip(input, input[1:])]
 
 print(Counter(cumsums)[1] * (Counter(cumsums)[3]))

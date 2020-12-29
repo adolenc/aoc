@@ -29,7 +29,7 @@ while len(allergen_in_ingredient) != len(ingredients_per_allergens):
                 ingredients_per_allergens[allergen2] -= set(ingredient)
 
 
-print(sum(1 for ingredient in all_ingredients if ingredient not in allergen_in_ingredient))
+print(sum(ingredient not in allergen_in_ingredient for ingredient in all_ingredients))
 
 # part 2
 print(','.join(sorted(list(allergen_in_ingredient), key=lambda x: allergen_in_ingredient[x])))

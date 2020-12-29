@@ -3,10 +3,12 @@ import sys
 import re
 from collections import defaultdict
 
-flatten = lambda lst: [e for slst in lst for e in slst]
 
 input = [line.strip() for line in sys.stdin]
 
+
+# part 1
+flatten = lambda lst: [e for slst in lst for e in slst]
 
 Gbwd = defaultdict(list) # unweighted directed graph Gbwd[from] = [to]
 Gfwd = defaultdict(dict) # weighted directed graph Gfwd[from][to] = int(weight)
@@ -18,7 +20,6 @@ for line in input:
         Gbwd[containee] += [container]
         Gfwd[container][containee] = int(count)
 
-# part 1
 def all_reachable_nodes_from(G, v):
     if v not in G: return set([v])
     return set([v] + flatten([all_reachable_nodes_from(G, neighbour) for neighbour in G[v]]))

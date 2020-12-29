@@ -19,7 +19,8 @@ for rule in rules:
 def parse(msg, grammar, start):
     applicables = []
     for option in grammar[start]:
-        restarts = [(0, msg)] # restarts is a list of (position within the option, evaluated msg) tuples
+        # restarts is a list of (position within the option, evaluated msg) tuples
+        restarts = [(0, msg)]
         while restarts:
             option_restart_idx, in_msg = restarts.pop()
 

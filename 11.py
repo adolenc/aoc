@@ -10,9 +10,9 @@ from collections import defaultdict
 input = [line.strip() for line in sys.stdin]
 
 
+# part 1
 seats = np.array([list(l.replace('.', '0').replace('L', '1')) for l in input], dtype=int)
 
-# part 1
 def simulate(counts_fn, max_seats):
     prev = np.ones(np.shape(seats), dtype=bool)
     next = np.zeros(np.shape(seats), dtype=bool)
@@ -23,7 +23,9 @@ def simulate(counts_fn, max_seats):
         next[(seats == 1) & (prev & (counts >= max_seats))] = False
     return next
 
-neighborhood = [[1, 1, 1], [1, 0, 1], [1, 1, 1]]
+neighborhood = [[1, 1, 1],
+                [1, 0, 1],
+                [1, 1, 1]]
 print(np.sum(simulate(lambda world: signal.convolve2d(world, neighborhood, 'same'), 4)))
 
 # part 2

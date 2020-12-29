@@ -6,7 +6,6 @@ import math
 input = [line.strip() for line in sys.stdin]
 
 
-
 # part 1
 ts = int(input[0])
 buses = list([(int(bus), offset) for offset, bus in enumerate(input[1].split(',')) if bus != 'x'])
