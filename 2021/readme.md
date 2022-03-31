@@ -9,3 +9,6 @@ For solving I use `./dev.sh ${day?}`, which generates a template python file
 `$day.py` and a blank `in` file for the puzzle input. The script then uses
 [entr](https://eradman.com/entrproject/) to re-run the solution whenever any of
 these two files are written to.
+
+Executing `./runall.sh ${SESSION_TOKEN?}` runs all the solutions in order by
+downloading the inputs from the advent of code website.
