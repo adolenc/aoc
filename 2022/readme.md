@@ -9,3 +9,7 @@ For solving I use `./dev.sh ${day?}`, which generates a template Haskell file
 `$day.hs` and a blank `in` file for the puzzle input. The script then uses
 [entr](https://eradman.com/entrproject/) to re-run the solution whenever any of
 these two files are written to.
+
+External dependencies required to run some of the solutions:
+
+    $ cabal install --lib split astar
