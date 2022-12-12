@@ -7,9 +7,6 @@ import Data.Graph.AStar (aStar)
 import qualified Data.HashSet as H
 
 
-dist :: (Int, Int) -> (Int, Int) -> Int
-dist (x1,y1) (x2,y2) = abs (x1-x2) + abs (y1-y2)
-
 main = do
   inp <- lines <$> getContents
   let (maxX,maxY) = (length (head inp) - 1,length inp - 1)
@@ -18,11 +15,12 @@ main = do
       hmap = map (map (\c -> if c == 'S' then 'a' else if c == 'E' then 'z' else c)) inp
       at (x,y) = hmap!!y!!x
       constCost = const . const
-  let ok p@(x,y) pn@(xn,yn) = inRange ((0,0), (maxX,maxY)) (xn,yn) && (ord $ at pn) - (ord $ at p) <= 1
-      ns (x,y) = H.fromList $ filter (ok (x,y)) [(x-1,y), (x+1,y), (x,y-1), (x,y+1)]
-      Just path = aStar ns (constCost 1) (dist end) (== end) start
+      heightAt = ord . at
+  let canMove p n = inRange ((0,0), (maxX,maxY)) n && heightAt n - heightAt p <= 1
+      ns p@(x,y) = H.fromList $ filter (canMove p) [(x-1,y), (x+1,y), (x,y-1), (x,y+1)]
+      Just path = aStar ns (constCost 1) ((heightAt end -) . heightAt) (== end) start
   print (length path)
-  let ok p@(x,y) pn@(xn,yn) = inRange ((0,0), (maxX,maxY)) (xn,yn) && (ord $ at pn) - (ord $ at p) >= -1
-      ns (x,y) = H.fromList $ filter (ok (x,y)) [(x-1,y), (x+1,y), (x,y-1), (x,y+1)]
-      Just path = aStar ns (constCost 1) (ord . at) (\p -> at p == 'a') end
+  let canMove p n = inRange ((0,0), (maxX,maxY)) n && heightAt n - heightAt p >= -1
+      ns p@(x,y) = H.fromList $ filter (canMove p) [(x-1,y), (x+1,y), (x,y-1), (x,y+1)]
+      Just path = aStar ns (constCost 1) heightAt ((== 'a') . at) end
   print (length path)
