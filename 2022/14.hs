@@ -15,14 +15,14 @@ toRockMap = toMap . parseInput
                                   in toMap' (S.union m rocks) ((x',y'):ps)
     toMap' m [p] = S.insert p m
 
-simulate :: Int -> RockMap -> Maybe RockMap
-simulate abyss = simulate' (500,0)
+dropSand :: Int -> RockMap -> Maybe RockMap
+dropSand abyss = dropSand' (500,0)
   where
-    simulate' (x,y) m | S.member (500,0) m = Nothing
+    dropSand' (x,y) m | S.member (500,0) m = Nothing
                       | y >= abyss = Nothing
-                      | S.notMember   (x,y+1) m = simulate'   (x,y+1) m
-                      | S.notMember (x-1,y+1) m = simulate' (x-1,y+1) m
-                      | S.notMember (x+1,y+1) m = simulate' (x+1,y+1) m
+                      | S.notMember   (x,y+1) m = dropSand'   (x,y+1) m
+                      | S.notMember (x-1,y+1) m = dropSand' (x-1,y+1) m
+                      | S.notMember (x+1,y+1) m = dropSand' (x+1,y+1) m
                       | otherwise = Just $ S.insert (x,y) m
 
 -- https://stackoverflow.com/a/35749543
@@ -31,6 +31,6 @@ iterateMaybe f = unfoldr (fmap (\s -> (s,s)) . f)
 main = do
   inp <- toRockMap <$> getContents
   let abyss = maximum . map snd $ S.toList inp
-  print (length $ iterateMaybe (simulate abyss) inp)
+  print (length $ iterateMaybe (dropSand abyss) inp)
   let abyssFloor = S.fromList $ map (, abyss+2) [500-abyss*2..500+abyss*2]
-  print (length $ iterateMaybe (simulate (abyss + 10)) (S.union inp abyssFloor))
+  print (length $ iterateMaybe (dropSand (abyss + 10)) $ S.union inp abyssFloor)

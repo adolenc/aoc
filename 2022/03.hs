@@ -8,10 +8,7 @@ chunks n = takeWhile (not . null) . unfoldr (Just . splitAt n)
 
 main = do
   inp <- lines <$> getContents
-  let findRepeats r = let (bot, top) = splitAt (length r `div` 2) r
-                      in head $ bot `intersect` top
-  let priority c = if c `elem` ['a'..'z']
-                   then ord c - ord 'a' + 1
-                   else ord c - ord 'A' + 27
+  let findRepeats r = head $ uncurry intersect $ splitAt (length r `div` 2) r
+  let priority c = if c `elem` ['a'..'z'] then ord c - ord 'a' + 1 else ord c - ord 'A' + 27
   print (sum $ map (priority . findRepeats) inp)
   print (sum $ map (priority . head . foldr1 intersect) (chunks 3 inp))
